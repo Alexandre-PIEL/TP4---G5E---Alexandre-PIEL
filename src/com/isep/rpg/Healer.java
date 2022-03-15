@@ -13,8 +13,8 @@ public class Healer extends SpellCaster {
   //
   // Constructors
   //
-  public Healer () {
-    super(2,70,20,10);
+  public Healer (String nameHero) {
+    super(2, nameHero, 70,20,10);
   }
   
   //

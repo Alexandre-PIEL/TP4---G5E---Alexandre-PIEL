@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Class Hero
  */
-abstract public class Hero {
+abstract public class Hero extends Entity {
 
   //
   // Fields
@@ -21,7 +21,8 @@ abstract public class Hero {
   //
   // Constructors
   //
-  public Hero (int clasHero, int lifePoints, int armor, int weaponsDamage) {
+  public Hero (int clasHero, String nameHero, int lifePoints, int armor, int weaponsDamage) {
+    super(nameHero, 1);
     this.clasHero = clasHero;
     this.lifePoints = lifePoints;
     this.armor = armor;

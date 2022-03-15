@@ -2,20 +2,19 @@
 package com.isep.rpg;
 
 /**
- * Class Boss
+ * Class Basic
  */
-public class Boss extends Enemy {
+public class Basic extends Enemy {
 
   //
   // Fields
   //
 
-
   //
   // Constructors
   //
-  public Boss (String nameBoss) {
-    super(2,nameBoss,80);
+  public Basic(String nameBasic) {
+    super(1,nameBasic,50);
   }
   
   //
