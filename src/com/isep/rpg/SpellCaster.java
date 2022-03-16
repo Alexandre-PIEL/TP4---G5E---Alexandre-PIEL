@@ -15,8 +15,8 @@ abstract public class SpellCaster extends Hero {
   //
   // Constructors
   //
-  public SpellCaster(int clasHero, String nameHero, int lifepoints, int armor, int weaponsDamage) {
-    super(clasHero, nameHero, lifepoints, armor, weaponsDamage);
+  public SpellCaster(int type, String name, int lifepoints, int armor, int weaponsDamage) {
+    super(type, name, lifepoints, armor, weaponsDamage);
     this.manaPoints = 100;
   }
   

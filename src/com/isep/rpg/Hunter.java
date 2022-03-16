@@ -15,8 +15,8 @@ public class Hunter extends Hero {
   //
   // Constructors
   //
-  public Hunter (String nameHero) {
-    super(1, nameHero, 80,10,10);
+  public Hunter (String name) {
+    super(1, name, 80,10,10);
     this.arrows = 50;
   };
   

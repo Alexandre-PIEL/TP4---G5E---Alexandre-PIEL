@@ -14,7 +14,8 @@ public class Game {
   //
   private ArrayList<Hero> heroes;
   private ArrayList<Enemy> enemies;
-  private ArrayList<Entity> fightingEntities;
+  private Hero fightingHero;
+  private Enemy fightingEnemy;
   private int entityTurn;
   private InputParser inputParser;
 
@@ -24,8 +25,7 @@ public class Game {
   public Game () {
     this.heroes = new ArrayList<>();
     this.enemies = new ArrayList<>();
-    this.entityTurn = (int)(Math.random() * 2);
-    this.fightingEntities = new ArrayList<>();
+    this.entityTurn = 0;
     this.inputParser = new InputParser();
   }
   
@@ -37,25 +37,58 @@ public class Game {
     createHeroes();
     generateEnemies();
     int i = 1;
-    while(this.heroes.size()>0) {
-      System.out.print("\nTOUR N°" + i + " - ");
-      this.fightingEntities.clear();
-      generateCombat();
-      System.out.print(this.fightingEntities.get(0).getNameEntity());
-      System.out.print(" CONTRE ");
-      System.out.println(this.fightingEntities.get(1).getNameEntity());
-      System.out.println(this.fightingEntities.get(this.entityTurn).getNameEntity() + " commence ...");
-      i++;
-      System.out.print("Press enter to continue");
-      try{System.in.read();}
-      catch(Exception e){}
+    while(true) {
+      check();
+      if (this.heroes.size()>0 && this.enemies.size()>0) {
+        System.out.print("\nTOUR N°" + i + " - ");
+        this.entityTurn = (int) (Math.random() * 2);
+        generateCombat();
+        System.out.print(this.fightingHero.getName());
+        System.out.print(" CONTRE ");
+        System.out.println(this.fightingEnemy.getName());
+        if (this.entityTurn == 0) { //le héros commence
+          System.out.println("\n" + this.fightingHero.getName() + " commence ... [ " + this.fightingHero.getLifePoints() + " PV ]");
+          askFirstHero();
+          check();
+          if (this.enemies.size() == 0){
+            System.out.print("\nVous avez gagné !");
+            break;
+          } else {
+            this.fightingEnemy.attack();
+            System.out.println("\n" + this.fightingEnemy.getName() + " réplique en attaquant ... [ " + this.fightingEnemy.getLifePoints() + " PV ]");
+          }
+        } else if (this.entityTurn == 1) { //l'énemi commence
+          System.out.println("\n" + this.fightingEnemy.getName() + " commence ...[ " + this.fightingEnemy.getLifePoints() + " PV ]");
+          this.fightingEnemy.attack();
+          System.out.println("\n" + this.fightingEnemy.getName() + " attaque ... ");
+          if (this.heroes.size() == 0){
+            System.out.print("\nVous avez perdu !");
+            break;
+          } else {
+            askSecondHero();
+          }
+        }
+        i++;
+        System.out.print("\nPress enter to continue");
+        try {
+          System.in.read();
+        } catch (Exception e) {
+        }
+      } else {
+        if (this.enemies.size() == 0){
+          System.out.print("\nVous avez gagné !");
+          break;
+        } else {
+          System.out.print("\nVous avez perdu !");
+          break;
+        }
+      }
     }
-
   }
 
   public void createHeroes() {
     int numHeroes = inputParser.askIntUser("\nChoisir le nombre de héros : ");
-    System.out.println("\n 1 = Hunter | 2 = Healer | 3 = Mage | 4 = Warrior");
+    System.out.println("\n 1 = Chasseur | 2 = Sorcier | 3 = Mage | 4 = Guerrier");
     for (int i=0; i<numHeroes; ++i){
       int clasHero = inputParser.askIntUser("\nChoisir la classe du héros N°" + (i+1) + " : ");
       while (true) {
@@ -93,10 +126,83 @@ public class Game {
   }
 
   public void generateCombat() {
-    int randHeroes = (int)(Math.random() * this.heroes.size());
-    this.fightingEntities.add(this.heroes.get(randHeroes));
-    int randEnemies = (int)(Math.random() * this.enemies.size());
-    this.fightingEntities.add(this.enemies.get(randEnemies));
+      int randHeroes = (int)(Math.random() * this.heroes.size());
+      this.fightingHero = this.heroes.get(randHeroes);
+      int randEnemies = (int)(Math.random() * this.enemies.size());
+      this.fightingEnemy = this.enemies.get(randEnemies);
+  }
+
+  public void askFirstHero() {
+    System.out.println("\n 1 = Attaquer | 2 = Boire | 3 = Manger");
+    int clasFirstActionHero = inputParser.askIntUser("\nChoisir l'action de " + this.fightingHero.getName() + " : ");
+    while (true) {
+      if (clasFirstActionHero == 1 || clasFirstActionHero == 2 || clasFirstActionHero == 3) {
+        switch (clasFirstActionHero) {
+          case 1 -> {
+            this.fightingEnemy.deleteLifePoints(this.fightingHero.attack());
+            System.out.println("\n" + this.fightingHero.getName() + " attaque ... ");
+          }
+          case 2 -> {
+            this.fightingHero.heal();
+            System.out.println("\n" + this.fightingHero.getName() + " bois ... ");
+          }
+          case 3 -> {
+            this.fightingHero.eat();
+            System.out.println("\n" + this.fightingHero.getName() + " mange ... ");
+          }
+        }
+        break;
+      } else {
+        System.out.println("\nERROR !");
+        clasFirstActionHero = inputParser.askIntUser("\nChoisir l'action de " + this.fightingHero.getName() + " : ");
+      }
+    }
+  }
+
+  public void askSecondHero() {
+    System.out.println("\n 1 = Attaquer | 2 = Défendre | 3 = Boire | 4 = Manger");
+    int clasSecondActionHero = inputParser.askIntUser("\nChoisir l'action de " + this.fightingHero.getName() + " : ");
+    while (true) {
+      if (clasSecondActionHero == 1 || clasSecondActionHero == 2 || clasSecondActionHero == 3 || clasSecondActionHero == 4) {
+        switch (clasSecondActionHero) {
+          case 1 -> {
+            this.fightingEnemy.deleteLifePoints(this.fightingHero.attack());
+            System.out.println("\n" + this.fightingHero.getName() + " réplique en attaquant ... ");
+          }
+          case 2 -> {
+            this.fightingHero.defend();
+            System.out.println("\n" + this.fightingHero.getName() + " réplique en se défendant ... ");
+          }
+          case 3 -> {
+            this.fightingHero.heal();
+            System.out.println("\n" + this.fightingHero.getName() + " réplique en buvant ... ");
+          }
+          case 4 -> {
+            this.fightingHero.eat();
+            System.out.println("\n" + this.fightingHero.getName() + " réplique en mangeant ... ");
+          }
+        }
+        break;
+      } else {
+        System.out.println("\nERROR !");
+        clasSecondActionHero = inputParser.askIntUser("\nChoisir l'action de " + this.fightingHero.getName() + " : ");
+      }
+    }
+  }
+
+  public void check(){
+    for (int y=0; y<this.heroes.size(); ++y){
+      if (this.heroes.get(y).getLifePoints() == 0) {
+        System.out.println("\n" + this.heroes.get(y).getName() + " éliminé !");
+        this.heroes.remove(y);
+      }
+    }
+    for (int z=0; z<this.enemies.size(); ++z){
+      if (this.enemies.get(z).getLifePoints() == 0) {
+        System.out.println("\n" + this.enemies.get(z).getName() + " éliminé !");
+        this.enemies.remove(z);
+      }
+    }
   }
 
 }

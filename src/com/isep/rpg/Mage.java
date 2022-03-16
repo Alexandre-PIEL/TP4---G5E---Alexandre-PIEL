@@ -13,8 +13,8 @@ public class Mage extends SpellCaster {
   //
   // Constructors
   //
-  public Mage (String nameHero) {
-    super(3, nameHero,80,30,10);
+  public Mage (String name) {
+    super(3, name,80,30,10);
   }
   
   //

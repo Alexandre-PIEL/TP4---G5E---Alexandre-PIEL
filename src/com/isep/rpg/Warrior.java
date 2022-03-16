@@ -13,8 +13,8 @@ public class Warrior extends Hero {
   //
   // Constructors
   //
-  public Warrior (String nameHero) {
-    super(4, nameHero, 100, 20, 5);
+  public Warrior (String name) {
+    super(4, name, 100, 20, 5);
   }
   
   //
