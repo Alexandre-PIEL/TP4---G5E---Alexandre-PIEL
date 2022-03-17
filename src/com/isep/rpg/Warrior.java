@@ -1,6 +1,8 @@
 
 package com.isep.rpg;
 
+import java.util.ArrayList;
+
 /**
  * Class Warrior
  */
@@ -14,7 +16,7 @@ public class Warrior extends Hero {
   // Constructors
   //
   public Warrior (String name) {
-    super(4, name, 100, 20, 5);
+    super(4, name, 70, 10, 20, new ArrayList<Potion>(), new ArrayList<Food>());
   }
   
   //

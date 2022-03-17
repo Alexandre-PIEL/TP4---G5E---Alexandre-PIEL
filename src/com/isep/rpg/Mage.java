@@ -1,10 +1,12 @@
 
 package com.isep.rpg;
 
+import java.util.ArrayList;
+
 /**
  * Class Mage
  */
-public class Mage extends SpellCaster {
+public class Mage extends Hero {
 
   //
   // Fields
@@ -14,7 +16,7 @@ public class Mage extends SpellCaster {
   // Constructors
   //
   public Mage (String name) {
-    super(3, name,80,30,10);
+    super(3, name,80,0,10, new ArrayList<Potion>(), new ArrayList<Food>());
   }
   
   //

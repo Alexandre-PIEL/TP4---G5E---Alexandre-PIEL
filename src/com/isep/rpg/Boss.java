@@ -15,7 +15,7 @@ public class Boss extends Enemy {
   // Constructors
   //
   public Boss (String nameBoss) {
-    super(2,nameBoss,80);
+    super(2,nameBoss,80, 10);
   }
   
   //

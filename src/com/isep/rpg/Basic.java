@@ -14,7 +14,7 @@ public class Basic extends Enemy {
   // Constructors
   //
   public Basic(String nameBasic) {
-    super(1,nameBasic,50);
+    super(1,nameBasic,50,5);
   }
   
   //

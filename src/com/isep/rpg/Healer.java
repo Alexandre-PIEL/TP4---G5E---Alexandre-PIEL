@@ -1,24 +1,26 @@
 
 package com.isep.rpg;
 
+import java.util.ArrayList;
+
 /**
  * Class Healer
  */
-public class Healer extends SpellCaster {
+public class Healer extends Hero {
 
-  //
-  // Fields
-  //
+    //
+    // Fields
+    //
 
-  //
-  // Constructors
-  //
-  public Healer (String nameHero) {
-    super(2, nameHero, 70,20,10);
-  }
-  
-  //
-  // Methods
-  //
+    //
+    // Constructors
+    //
+    public Healer (String name) {
+        super(2, name, 50, 0, 5, new ArrayList<Potion>(), new ArrayList<Food>());
+    }
+
+    //
+    // Methods
+    //
 
 }
